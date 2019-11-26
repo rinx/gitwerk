@@ -1,0 +1,80 @@
+name: Build native image
+on:
+  push:
+    paths:
+      - src/**
+      - project.clj
+      - reflection.json
+  pull_request:
+    paths:
+      - src/**
+      - project.clj
+      - reflection.json
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: DeLaGuardo/setup-graalvm@1.0
+      with:
+        graalvm-version: '19.2.1'
+    - name: Install dependencies
+      run: |
+        echo "Install dependencies"
+        gu install native-image
+        curl -o lein https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
+        chmod a+x lein
+        sudo apt-get update && sudo apt-get install -y upx
+    - name: Build uberjar
+      run: |
+        echo "Build uberjar"
+        ./lein uberjar
+    - name: Build native image
+      run: |
+        echo "Build native image"
+        native-image \
+          -jar target/gitwerk-0.1.0-SNAPSHOT-standalone.jar \
+          -H:Name=gitwerk \
+          -H:+ReportExceptionStackTraces \
+          -J-Dclojure.spec.skip-macros=true \
+          -J-Dclojure.compiler.direct-linking=true \
+          -H:Log=registerResource: \
+          -H:ReflectionConfigurationFiles=reflection.json \
+          --enable-url-protocols=http,https \
+          --enable-all-security-services \
+          -H:+JNI \
+          --verbose \
+          --no-fallback \
+          --no-server \
+          --report-unsupported-elements-at-runtime \
+          --initialize-at-build-time \
+          --initialize-at-run-time=org.eclipse.jgit.transport.HttpAuthMethod$Digest \
+          -H:IncludeResourceBundles=org.eclipse.jgit.internal.JGitText \
+          --allow-incomplete-classpath \
+          -J-Xms2g \
+          -J-Xmx6g
+        upx --lzma --best gitwerk
+        zip --junk-paths gitwerk-linux-amd64 gitwerk
+    - name: Create release
+      if: startsWith( github.ref, 'refs/tags/')
+      id: create_release
+      uses: actions/create-release@v1.0.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+    - name: Upload Release Asset
+      if: startsWith( github.ref, 'refs/tags/')
+      id: upload-release-asset
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./gitwerk-linux-amd64.zip
+        asset_name: gitwerk-linux-amd64.zip
+        asset_content_type: application/zip

@@ -1,0 +1,13 @@
+/.lein-repl-history
+/.lsp
+/.nrepl-port
+/target
+/classes
+/checkouts
+pom.xml
+pom.xml.asc
+*.jar
+*.class
+/.lein-*
+.hgignore
+.hg/
