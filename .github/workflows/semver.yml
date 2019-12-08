@@ -12,7 +12,7 @@ jobs:
       - name: Check out code.
         uses: actions/checkout@v1
         with:
-          fetch-depth: 1
+          fetch-depth: 30
       - name: Get latest gitwerk
         run: |
           release=`git describe --abbrev=0 --tags`
