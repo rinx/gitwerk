@@ -54,7 +54,7 @@ jobs:
           --allow-incomplete-classpath \
           -J-Xms2g \
           -J-Xmx6g
-        upx --lzma --best gitwerk
+        # upx --lzma --best gitwerk
         zip --junk-paths gitwerk-linux-amd64 gitwerk
     - name: Create release
       if: startsWith( github.ref, 'refs/tags/')
