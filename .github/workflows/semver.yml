@@ -1,0 +1,24 @@
+name: Run gitwerk
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  semver-auto:
+    name: Run semver-auto
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code.
+        uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+      - name: Get latest gitwerk
+        run: |
+          release=`git describe --abbrev=0 --tags`
+          wget "https://github.com/rinx/gitwerk/releases/download/${release}/gitwerk-linux-amd64.zip"
+          unzip gitwerk-linux-amd64.zip
+      - name: Run gitwerk semver-auto
+        run: |
+          ./gitwerk semver-auto
+          git ps --tags
