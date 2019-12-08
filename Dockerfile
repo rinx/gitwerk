@@ -1,4 +1,4 @@
-FROM oracle/graalvm-ce:latest as graalvm
+FROM oracle/graalvm-ce:19.2.1 as graalvm
 
 LABEL maintainer "rinx <rintaro.okamura@gmail.com>"
 
