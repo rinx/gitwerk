@@ -1,4 +1,4 @@
-(ns gitwerk.externs.git
+(ns gitwerk.external.git
  (:require
    [clojure.spec.alpha :as spec])
  (:import

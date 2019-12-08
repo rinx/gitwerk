@@ -1,7 +1,7 @@
 (ns gitwerk.command.clone
   (:require
    [clojure.spec.alpha :as spec]
-   [gitwerk.externs.git :as git]))
+   [gitwerk.external.git :as git]))
 
 (defn run [& args]
   (case (count args)

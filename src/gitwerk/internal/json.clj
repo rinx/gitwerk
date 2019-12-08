@@ -1,4 +1,4 @@
-(ns gitwerk.json
+(ns gitwerk.internal.json
   (:require
    [clojure.spec.alpha :as spec]
    [jsonista.core :as jsonista]
