@@ -9,12 +9,14 @@
 
 ### semver-auto
 
+increments version by git log message contexts
+
 ```
 ## when the latest tag is v0.0.1
 ## the commit comment includes "[patch]"
 
 $ gitwerk semver-auto
-## bumps v0.0.2 tag
+## increments tag to v0.0.2
 ```
 
 ### semver

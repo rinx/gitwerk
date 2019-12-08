@@ -27,12 +27,15 @@
 (defn version->str [{:keys [prefix major minor patch suffix]}]
   (str prefix major delimiter minor delimiter patch suffix))
 
-(defn default-version-str [{:keys [prefix? suffix]}]
-  (-> {:major 0 :minor 0 :patch 0}
-      (cond->
-       prefix? (assoc :prefix "v")
-       suffix (assoc :suffix suffix))
-      (version->str)))
+(defn default-version-str
+  ([]
+   (default-version-str {:prefix "v"}))
+  ([{:keys [prefix suffix]}]
+   (-> {:major 0 :minor 0 :patch 0}
+       (cond->
+        prefix (assoc :prefix prefix)
+        suffix (assoc :suffix suffix))
+       (version->str))))
 
 (defn patch [v]
   (-> v
@@ -49,6 +52,12 @@
       (assoc :minor 0)
       (update :major inc)))
 
+(defn prefix [v new-prefix]
+  (assoc v :prefix new-prefix))
+
+(defn suffix [v new-suffix]
+  (assoc v :suffix new-suffix))
+
 (comment
   (parse-refs "refs/tags/0.0.1-alpha")
 
@@ -60,9 +69,9 @@
   (version->str {:major 1 :minor 2 :patch 3})
   (version->str {:prefix "v" :major 1 :minor 2 :patch 3 :suffix "-alpha"})
 
-  (default-version-str {:prefix? false})
-  (default-version-str {:prefix? true})
-  (default-version-str {:prefix? true :suffix "-alpha"})
+  (default-version-str)
+  (default-version-str {:suffix "-alpha"})
+  (default-version-str {:prefix "v" :suffix "-alpha"})
 
   (patch (str->version "1.2.3"))
   (minor (str->version "1.2.3"))
