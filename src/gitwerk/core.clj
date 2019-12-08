@@ -8,6 +8,7 @@
    [gitwerk.command.clone :as command.clone]
    [gitwerk.command.log :as command.log]
    [gitwerk.command.semver :as command.semver]
+   [gitwerk.command.semver-auto :as command.semver-auto]
    [gitwerk.command.tag :as command.tag])
   (:gen-class))
 
@@ -24,6 +25,7 @@
     :clone (apply command.clone/run args)
     :log (apply command.log/run args)
     :semver (apply command.semver/run args)
+    :semver-auto (apply command.semver-auto/run args)
     :tag (apply command.tag/run args)
     (do
       (println cli-header)

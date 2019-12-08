@@ -57,6 +57,12 @@
       (tags)
       (first)))
 
+(defn tag [repo tag-name]
+  (-> repo
+      (.tag)
+      (.setName tag-name)
+      (.call)))
+
 (comment
   (-> (repo ".")
       (logs)))
