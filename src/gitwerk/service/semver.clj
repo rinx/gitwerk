@@ -15,7 +15,7 @@
         (nth matches 1)))))
 
 (defn str->version [s]
-  (let [matches (re-seq #"^(v?)(\d+)\.(\d+)\.(\d+)(.*)$" s)]
+  (let [matches (re-seq #"^(.*)(\d+)\.(\d+)\.(\d+)(.*)$" s)]
     (when matches
       (let [matches (nth matches 0)]
         {:prefix (nth matches 1)

@@ -21,4 +21,7 @@ jobs:
       - name: Run gitwerk semver-auto
         run: |
           ./gitwerk semver-auto
-          git push --tags
+          git remote set-url origin "https://rinx:${GITHUB_TOKEN}@github.com/rinx/gitwerk.git"
+          git push origin --tags
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
