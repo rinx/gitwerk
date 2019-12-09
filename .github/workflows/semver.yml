@@ -15,8 +15,7 @@ jobs:
           fetch-depth: 30
       - name: Get latest gitwerk
         run: |
-          release=`git describe --abbrev=0 --tags`
-          wget "https://github.com/rinx/gitwerk/releases/download/${release}/gitwerk-linux-amd64.zip"
+          wget "https://github.com/rinx/gitwerk/releases/latest/download/gitwerk-linux-amd64.zip"
           unzip gitwerk-linux-amd64.zip
       - name: Run gitwerk semver-auto
         run: |
