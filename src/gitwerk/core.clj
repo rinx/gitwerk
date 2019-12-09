@@ -17,7 +17,7 @@
   [["-f" "--file PATH" "config"
     :id :config-filename
     :default "config.edn"]
-   ["-d" "--debug" :debug :debug?]
+   ["-d" "--debug" :id :debug?]
    ["-h" "--help" :id :help?]])
 
 (defn run
