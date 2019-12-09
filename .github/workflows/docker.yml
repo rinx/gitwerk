@@ -42,6 +42,6 @@ jobs:
     - name: push to DockerHub (tags)
       if: startsWith( github.ref, 'refs/tags/')
       run: |
-        tag_name=`cat $GITHUB_REF | sed -e 's:^refs/tags/::'`
+        tag_name=`echo $GITHUB_REF | sed -e 's:^refs/tags/::'`
         docker tag gitwerk gitwerk:${tag_name}
         docker push gitwerk:${tag_name}
