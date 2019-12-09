@@ -13,9 +13,7 @@
                     :full-message)
         tag (or (-> repo
                     (git/tags)
-                    (semver/latest-tag)
-                    (or "")
-                    (semver/parse-refs))
+                    (semver/latest-tag))
                 (semver/default-version-str))
         new-tag (semver-auto/semver-auto message tag)]
     (when (not (= tag new-tag))
