@@ -12,7 +12,7 @@ jobs:
       - name: Check out code.
         uses: actions/checkout@v1
         with:
-          fetch-depth: 30
+          fetch-depth: 0
       - name: Get latest gitwerk
         run: |
           wget "https://github.com/rinx/gitwerk/releases/latest/download/gitwerk-linux-amd64.zip"
@@ -20,7 +20,7 @@ jobs:
       - name: Run gitwerk semver-auto
         run: |
           ./gitwerk semver-auto
-          git remote set-url origin "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/rinx/gitwerk.git"
+          git remote set-url origin "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           git push origin --tags
         env:
           GITHUB_USER: ${{ secrets.GITWERK_REPO_USER }}
