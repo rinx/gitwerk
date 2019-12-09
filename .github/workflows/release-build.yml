@@ -1,8 +1,13 @@
 name: Build native image for release
 on:
   push:
+    branches:
+      - master
     tags:
-      - '*'
+      - '*.*.*'
+      - 'v*.*.*'
+      - '*.*.*-*'
+      - 'v*.*.*-*'
 
 jobs:
   build:
