@@ -17,16 +17,17 @@
   [["-f" "--file PATH" "config"
     :id :config-filename
     :default "config.edn"]
+   ["-d" "--debug" :debug :debug?]
    ["-h" "--help" :id :help?]])
 
 (defn run
-  [{:keys [command args summary] :as ctx}]
+  [{:keys [command args options summary] :as ctx}]
   (case (csk/->kebab-case-keyword command)
-    :clone (apply command.clone/run args)
-    :log (apply command.log/run args)
-    :semver (apply command.semver/run args)
-    :semver-auto (apply command.semver-auto/run args)
-    :tag (apply command.tag/run args)
+    :clone (command.clone/run ctx args)
+    :log (command.log/run ctx args)
+    :semver (command.semver/run ctx args)
+    :semver-auto (command.semver-auto/run ctx args)
+    :tag (command.tag/run ctx args)
     (do
       (println cli-header)
       (println summary))))
@@ -36,6 +37,7 @@
   (let [{:keys [config-filename help?]} options
         ctx {:command (first arguments)
              :args (drop 1 arguments)
+             :options options
              :summary summary}]
     (if (or help? (nil? (:command ctx)))
       (do

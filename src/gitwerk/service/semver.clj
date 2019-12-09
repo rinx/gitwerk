@@ -58,7 +58,24 @@
 (defn suffix [v new-suffix]
   (assoc v :suffix new-suffix))
 
+(defn latest-tag [ref-tags]
+  (->> ref-tags
+       (map parse-refs)
+       (map str->version)
+       (sort-by :patch <)
+       (sort-by :minor <)
+       (sort-by :major <)
+       (map version->str)
+       (last)))
+
 (comment
+  (->> ["v0.1.2" "0.1.1" "v0.1.0" "1.0.1" "0.2.0" "2.0.1" "0.0.1"]
+       (map str->version)
+       (sort-by :patch <)
+       (sort-by :minor <)
+       (sort-by :major <)
+       (map version->str))
+
   (parse-refs "refs/tags/0.0.1-alpha")
 
   (str->version "1.2.3")

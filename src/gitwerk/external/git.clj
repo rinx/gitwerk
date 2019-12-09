@@ -52,11 +52,6 @@
       (logs)
       (first)))
 
-(defn latest-tag [repo]
-  (-> repo
-      (tags)
-      (first)))
-
 (defn tag [repo tag-name]
   (-> repo
       (.tag)

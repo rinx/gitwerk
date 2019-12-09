@@ -6,13 +6,14 @@
    [gitwerk.service.semver :as semver]
    [gitwerk.service.semver-auto :as semver-auto]))
 
-(defn run [& args]
+(defn run [ctx args]
   (let [repo (git/repo ".")
         message (-> repo
                     (git/latest-log)
                     :full-message)
         tag (or (-> repo
-                    (git/latest-tag)
+                    (git/tags)
+                    (semver/latest-tag)
                     (or "")
                     (semver/parse-refs))
                 (semver/default-version-str))
@@ -21,4 +22,4 @@
       (git/tag repo new-tag))))
 
 (comment
-  (run))
+  (run {} []))

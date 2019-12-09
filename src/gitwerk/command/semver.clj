@@ -5,7 +5,7 @@
    [gitwerk.external.git :as git]
    [gitwerk.service.semver :as semver]))
 
-(defn run [& args]
+(defn run [ctx args]
   (let [semver-type (-> (first args)
                         (string/lower-case)
                         (keyword))
@@ -14,7 +14,8 @@
                       :minor semver/minor
                       :major semver/major)]
     (-> (git/repo ".")
-        (git/latest-tag)
+        (git/tags)
+        (semver/latest-tag)
         (semver/parse-refs)
         (semver/str->version)
         (semver-func)
@@ -22,6 +23,6 @@
         (println))))
 
 (comment
-  (run "patch")
-  (run "minor")
-  (run "major"))
+  (run {} ["patch"])
+  (run {} ["minor"])
+  (run {} ["major"]))

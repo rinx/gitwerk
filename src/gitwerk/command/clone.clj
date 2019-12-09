@@ -3,7 +3,7 @@
    [clojure.spec.alpha :as spec]
    [gitwerk.external.git :as git]))
 
-(defn run [& args]
+(defn run [ctx args]
   (case (count args)
     1 (git/clone (first args))
     (throw
