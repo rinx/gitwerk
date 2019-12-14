@@ -26,16 +26,14 @@ COPY Makefile Makefile
 RUN make
 
 RUN mkdir -p /out/lib \
-    && cp $JAVA_HOME/jre/lib/amd64/libsunec.so /out/lib/ \
     && cp $JAVA_HOME/jre/lib/security/cacerts /out
 
-FROM ubuntu:latest
+FROM scratch
 
 LABEL maintainer "rinx <rintaro.okamura@gmail.com>"
 
-RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
-
+COPY --from=graalvm /usr/lib64/libstdc++.so.6.0.19 /usr/lib64/libstdc++.so.6
 COPY --from=graalvm /out /gitwerk-libs
 COPY --from=graalvm /gitwerk/gitwerk /gitwerk
 
-CMD ["/gitwerk", "-Djava.library.path=/gitwerk-libs/lib", "-Djavax.net.ssl.trustStore=/gitwerk-libs"]
+CMD ["/gitwerk", "-Djavax.net.ssl.trustStore=/gitwerk-libs"]
