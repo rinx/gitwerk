@@ -1,4 +1,6 @@
-FROM oracle/graalvm-ce:19.2.1 as graalvm
+ARG GRAALVM_VERSION=latest
+
+FROM oracle/graalvm-ce:${GRAALVM_VERSION} as graalvm
 
 LABEL maintainer "rinx <rintaro.okamura@gmail.com>"
 
@@ -17,29 +19,11 @@ COPY src src
 
 RUN lein uberjar
 
-COPY reflection.json reflection.json
+COPY native-config native-config
 
-RUN native-image \
-    -jar target/gitwerk-0.1.0-SNAPSHOT-standalone.jar \
-    -H:Name=gitwerk \
-    -H:+ReportExceptionStackTraces \
-    -J-Dclojure.spec.skip-macros=true \
-    -J-Dclojure.compiler.direct-linking=true \
-    -H:Log=registerResource: \
-    -H:ReflectionConfigurationFiles=reflection.json \
-    --enable-url-protocols=http,https \
-    --enable-all-security-services \
-    -H:+JNI \
-    --verbose \
-    --no-fallback \
-    --no-server \
-    --report-unsupported-elements-at-runtime \
-    --initialize-at-build-time \
-    --initialize-at-run-time=org.eclipse.jgit.transport.HttpAuthMethod$Digest \
-    -H:IncludeResourceBundles=org.eclipse.jgit.internal.JGitText \
-    --allow-incomplete-classpath \
-    -J-Xms2g \
-    -J-Xmx6g
+COPY Makefile Makefile
+
+RUN make
 
 RUN mkdir -p /out/lib \
     && cp $JAVA_HOME/jre/lib/amd64/libsunec.so /out/lib/ \

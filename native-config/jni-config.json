@@ -1,0 +1,6 @@
+[
+{
+  "name":"gitwerk.core",
+  "methods":[{"name":"main","parameterTypes":["java.lang.String[]"] }]
+}
+]

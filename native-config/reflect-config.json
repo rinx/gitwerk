@@ -1,0 +1,76 @@
+[
+{
+  "name":"clojure.core.server__init"
+},
+{
+  "name":"clojure.core__init"
+},
+{
+  "name":"gitwerk.core__init"
+},
+{
+  "name":"org.eclipse.jgit.api.Git",
+  "allPublicMethods":true
+},
+{
+  "name":"org.eclipse.jgit.api.ListTagCommand",
+  "allPublicMethods":true
+},
+{
+  "name":"org.eclipse.jgit.api.LogCommand",
+  "allPublicMethods":true
+},
+{
+  "name":"org.eclipse.jgit.api.TagCommand",
+  "allPublicMethods":true
+},
+{
+  "name":"org.eclipse.jgit.internal.JGitText",
+  "allPublicFields":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.eclipse.jgit.lib.CoreConfig$AutoCRLF",
+  "methods":[{"name":"values","parameterTypes":[] }]
+},
+{
+  "name":"org.eclipse.jgit.lib.CoreConfig$CheckStat",
+  "methods":[{"name":"values","parameterTypes":[] }]
+},
+{
+  "name":"org.eclipse.jgit.lib.CoreConfig$EOL",
+  "methods":[{"name":"values","parameterTypes":[] }]
+},
+{
+  "name":"org.eclipse.jgit.lib.CoreConfig$HideDotFiles",
+  "methods":[{"name":"values","parameterTypes":[] }]
+},
+{
+  "name":"org.eclipse.jgit.lib.CoreConfig$SymLinks",
+  "methods":[{"name":"values","parameterTypes":[] }]
+},
+{
+  "name":"org.eclipse.jgit.lib.ObjectIdRef$PeeledNonTag",
+  "allPublicMethods":true
+},
+{
+  "name":"org.eclipse.jgit.lib.ObjectIdRef$PeeledTag",
+  "allPublicMethods":true
+},
+{
+  "name":"org.eclipse.jgit.lib.PersonIdent",
+  "allPublicMethods":true
+},
+{
+  "name":"org.eclipse.jgit.revwalk.RevCommit",
+  "allPublicMethods":true
+},
+{
+  "name":"org.eclipse.jgit.revwalk.RevWalk",
+  "allPublicMethods":true
+},
+{
+  "name":"org.eclipse.jgit.internal.storage.file.RefDirectory$LooseUnpeeled",
+  "allPublicMethods":true
+}
+]

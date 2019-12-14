@@ -17,44 +17,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - uses: DeLaGuardo/setup-graalvm@1.0
+    - uses: rinx/setup-graalvm-ce@v0.0.1
       with:
-        graalvm-version: '19.2.1'
+        graalvm-version: 19.3.0
+        java-version: java8
     - name: Install dependencies
       run: |
-        echo "Install dependencies"
         gu install native-image
         curl -o lein https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
         chmod a+x lein
         sudo apt-get update && sudo apt-get install -y upx
     - name: Build uberjar
       run: |
-        echo "Build uberjar"
         ./lein uberjar
     - name: Build native image
       run: |
-        echo "Build native image"
-        native-image \
-          -jar target/gitwerk-0.1.0-SNAPSHOT-standalone.jar \
-          -H:Name=gitwerk \
-          -H:+ReportExceptionStackTraces \
-          -J-Dclojure.spec.skip-macros=true \
-          -J-Dclojure.compiler.direct-linking=true \
-          -H:Log=registerResource: \
-          -H:ReflectionConfigurationFiles=reflection.json \
-          --enable-url-protocols=http,https \
-          --enable-all-security-services \
-          -H:+JNI \
-          --verbose \
-          --no-fallback \
-          --no-server \
-          --report-unsupported-elements-at-runtime \
-          --initialize-at-build-time \
-          --initialize-at-run-time=org.eclipse.jgit.transport.HttpAuthMethod$Digest \
-          -H:IncludeResourceBundles=org.eclipse.jgit.internal.JGitText \
-          --allow-incomplete-classpath \
-          -J-Xms2g \
-          -J-Xmx6g
+        make
         # upx --lzma --best gitwerk
         zip --junk-paths gitwerk-linux-amd64 gitwerk
     - name: Create release

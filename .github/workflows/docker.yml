@@ -21,7 +21,9 @@ jobs:
     - uses: actions/checkout@v1
     - name: Build the Docker image
       run: |
-        docker build -t gitwerk .
+        docker build -t gitwerk . --build-arg GRAALVM_VERSION=${GRAALVM_VERSION}
+      env:
+        GRAALVM_VERSION: '19.3.0'
     - name: Login to DockerHub
       run: |
         echo ${DOCKERHUB_PASS} | docker login --username ${DOCKERHUB_USER} --password-stdin

@@ -8,7 +8,7 @@
                  [org.clojure/tools.cli "0.4.2"]
                  [metosin/jsonista "0.2.2"]
                  [camel-snake-kebab "0.4.0"]
-                 [io.quarkus/quarkus-jgit "1.0.1.Final"]
+                 [io.quarkus/quarkus-jgit "1.1.0.CR1"]
                  [org.martinklepsch/clj-http-lite "0.4.1"]]
   :profiles {:dev {:dependencies [[org.clojure/tools.namespace "0.2.11"]
                                   [orchestra "2019.02.06-1"]]
