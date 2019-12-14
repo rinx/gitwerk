@@ -7,11 +7,21 @@
 [![GitHub Actions: Build Docker image](https://github.com/rinx/gitwerk/workflows/Build%20docker%20image/badge.svg)](https://github.com/rinx/gitwerk/actions)
 [![GitHub Actions: Build Native image](https://github.com/rinx/gitwerk/workflows/Build%20native%20image/badge.svg)](https://github.com/rinx/gitwerk/actions)
 
+gitwerk is a CLI tool for supporting Git(Hub) operations on CI.
+
+## Install
+
+It is available to download a native binary from the [latest release](https://github.com/rinx/gitwerk/releases/latest).
+
 ## Usage
+
+gitwerk has several subcommands.
 
 ### semver-auto
 
-increments version by git log message contexts
+increments version by git log message contexts.
+
+[semver workflow of this repository](https://github.com/rinx/gitwerk/blob/master/.github/workflows/semver.yml) is an example of this subcommand.
 
 ```
 ## when the latest tag is v0.0.1
@@ -62,3 +72,18 @@ v0.1.0
 $ gitwerk semver major
 v1.0.0
 ```
+
+## License
+
+Copyright © 2019 rinx
+
+This program and the accompanying materials are made available under the
+terms of the Eclipse Public License 2.0 which is available at
+http://www.eclipse.org/legal/epl-2.0.
+
+This Source Code may also be made available under the following Secondary
+Licenses when the conditions for such availability set forth in the Eclipse
+Public License, v. 2.0 are satisfied: GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or (at your
+option) any later version, with the GNU Classpath Exception which is available
+at https://www.gnu.org/software/classpath/license.html.
