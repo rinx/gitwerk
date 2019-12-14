@@ -1,6 +1,8 @@
 name: Build native image
 on:
   push:
+    branches:
+      - master
     tags:
       - '*.*.*'
       - 'v*.*.*'
@@ -35,6 +37,11 @@ jobs:
         make
         # upx --lzma --best gitwerk
         zip --junk-paths gitwerk-linux-amd64 gitwerk
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: gitwerk-linux-amd64.zip
+        path: ./gitwerk-linux-amd64.zip
     - name: Create release
       if: startsWith( github.ref, 'refs/tags/')
       id: create_release
