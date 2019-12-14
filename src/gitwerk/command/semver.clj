@@ -16,7 +16,6 @@
     (-> (git/repo ".")
         (git/tags)
         (semver/latest-tag)
-        (semver/parse-refs)
         (semver/str->version)
         (semver-func)
         (semver/version->str)
