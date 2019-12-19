@@ -50,17 +50,17 @@ jobs:
         run: |
           brew cask install graalvm/tap/graalvm-ce-java8
           GRAALVM_HOME=/Library/Java/JavaVirtualMachines/graalvm-ce-java8-19.3.0/Contents/Home
+
           echo "::set-env name=PATH::$PATH:$GRAALVM_HOME/bin"
           echo "::set-env name=GRAALVM_HOME::$GRAALVM_HOME"
           echo "::set-env name=JAVA_HOME::$GRAALVM_HOME"
       - name: Install dependencies
         run: |
+          brew install leiningen
           gu install native-image
-          curl -o lein https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
-          chmod a+x lein
       - name: Build uberjar
         run: |
-          ./lein uberjar
+          lein uberjar
       - name: Build native image
         run: |
           make
