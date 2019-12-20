@@ -55,8 +55,8 @@ jobs:
           echo "::set-env name=JAVA_HOME::$GRAALVM_HOME"
       - name: Install dependencies
         run: |
+          java -version
           brew install leiningen
-          which gu
           gu install native-image
       - name: Build uberjar
         run: |
