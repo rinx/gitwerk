@@ -11,7 +11,7 @@ gitwerk is a CLI tool for supporting Git(Hub) operations on CI.
 
 ## Install
 
-It is available to download a native binary from the [latest release](https://github.com/rinx/gitwerk/releases/latest).
+It is available to download native binaries for Linux and macOS from the [latest release](https://github.com/rinx/gitwerk/releases/latest).
 
 ## Usage
 
