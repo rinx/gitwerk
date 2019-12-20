@@ -56,6 +56,7 @@ jobs:
       - name: Install dependencies
         run: |
           brew install leiningen
+          which gu
           gu install native-image
       - name: Build uberjar
         run: |
