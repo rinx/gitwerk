@@ -48,14 +48,21 @@ jobs:
       - uses: actions/checkout@v1
       - name: Install GraalVM
         run: |
-          brew cask install graalvm/tap/graalvm-ce-java8
-          GRAALVM_HOME=/Library/Java/JavaVirtualMachines/graalvm-ce-java8-19.3.0/Contents/Home
-          echo "::set-env name=PATH::$PATH:$GRAALVM_HOME/bin"
+          TMP_GRAALVM_HOME=/tmp/graalvm
+          GRAALVM_HOME=/tmp/graalvm/Contents/Home
+          GRAALVM_TGZ_URI="https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAALVM_VERSION}/graalvm-ce-${JAVA_VERSION}-darwin-amd64-${GRAALVM_VERSION}.tar.gz"
+          curl -sL $GRAALVM_TGZ_URI --output graalvm.tar.gz
+          mkdir -p $TMP_GRAALVM_HOME
+          tar -xf graalvm.tar.gz -C $TMP_GRAALVM_HOME --strip-components=1
+          chmod -R a+rwx $TMP_GRAALVM_HOME
+          echo "::set-env name=PATH::$GRAALVM_HOME/bin:$PATH"
           echo "::set-env name=GRAALVM_HOME::$GRAALVM_HOME"
           echo "::set-env name=JAVA_HOME::$GRAALVM_HOME"
+        env:
+          GRAALVM_VERSION: 19.3.0
+          JAVA_VERSION: java8
       - name: Install dependencies
         run: |
-          java -version
           brew install leiningen
           gu install native-image
       - name: Build uberjar
