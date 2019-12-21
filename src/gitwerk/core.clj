@@ -2,12 +2,27 @@
   (:require
    [clojure.spec.alpha :as spec]
    [clojure.tools.cli :as cli]
+   [clojure.string :as string]
    [clojure.edn :as edn]
    [clojure.java.io :as io]
    [gitwerk.service.runner :as runner])
   (:gen-class))
 
-(def cli-header "Usage: gitwerk [command] [options]")
+(def cli-header
+  (string/join
+    "\n"
+    ["gitwerk is a CLI tool for supporting Git(Hub) operations on CI."
+     ""
+     "Usage: gitwerk [command] [options]"
+     ""
+     "Available commands:"
+     "  clone [url]   clone git repository"
+     "  log           show git logs of current directory"
+     "  semver [type] print incremented version"
+     "  semver-auto   increment version by latest git log message contexts"
+     "  tag           show git tags of current directory"
+     ""
+     "Options:"]))
 (def cli-options
   [["-f" "--file PATH" "config"
     :id :config-filename

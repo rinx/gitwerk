@@ -29,6 +29,7 @@ $ git commit -m "[patch] increment patch version"
 ## the commit comment contains "[patch]"
 
 $ gitwerk semver-auto
+{:status :updated :old-version v0.0.1 :new-version v0.0.2}
 ## increments tag to v0.0.2
 
 ###...
@@ -37,6 +38,7 @@ $ git commit -m "[tag.suffix=-alpha] [minor] increment minor version and add suf
 ## the commit comment contains "[minor]" and "[tag.suffix=-alpha]"
 
 $ gitwerk semver-auto
+{:status :updated :old-version v0.0.2 :new-version v0.1.0-alpha}
 ## increments tag to v0.1.0-alpha
 
 ###...
@@ -45,6 +47,7 @@ $ git commit -m "[tag.prefix=] [tag.suffix=] [major] increment major version and
 ## the commit comment contains "[major]", "[tag.prefix=]" and "[tag.suffix=]"
 
 $ gitwerk semver-auto
+{:status :updated :old-version v0.1.0-alpha :new-version 1.0.0}
 ## increments tag to 1.0.0
 
 ###...
@@ -53,6 +56,7 @@ $ git commit -m "[tag.prefix=v] just adding prefix"
 ## the commit comment contains "[tag.prefix=v]"
 
 $ gitwerk semver-auto
+{:status :updated :old-version 1.0.0 :new-version v1.0.0}
 ## increments tag to v1.0.0
 ```
 
