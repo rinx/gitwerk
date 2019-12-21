@@ -10,9 +10,9 @@ on:
       - 'v*.*.*-*'
   pull_request:
     paths:
+      - .github/workflows/build.yml
       - src/**
       - project.clj
-      - reflection.json
 
 jobs:
   build-linux:
@@ -35,7 +35,7 @@ jobs:
       - name: Build native image
         run: |
           make
-          # upx --lzma --best gitwerk
+          upx --lzma --best gitwerk
           zip --junk-paths gitwerk-linux-amd64 gitwerk
       - name: Upload artifact
         uses: actions/upload-artifact@v1
