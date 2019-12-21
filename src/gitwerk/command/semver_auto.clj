@@ -6,8 +6,9 @@
    [gitwerk.service.semver :as semver]
    [gitwerk.service.semver-auto :as semver-auto]))
 
-(defn run [ctx args]
-  (let [repo (git/repo ".")
+(defn semver-auto
+  [repodir]
+  (let [repo (git/repo repodir)
         message (-> repo
                     (git/latest-log)
                     :full-message)
@@ -17,7 +18,21 @@
                 (semver/default-version-str))
         new-tag (semver-auto/semver-auto message tag)]
     (when (not (= tag new-tag))
-      (git/tag repo new-tag))))
+      (git/tag repo new-tag)
+      {:old tag
+       :new new-tag})))
+
+(defn run [ctx _]
+  (let [res (semver-auto ".")]
+    (if res
+      {:status 0
+       :console-out
+       {:status :updated
+        :old-version (:old res)
+        :new-version (:new res)}}
+      {:status 0
+       :console-out
+       {:status :not-updated}})))
 
 (comment
   (run {} []))
