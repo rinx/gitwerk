@@ -4,6 +4,10 @@
    [gitwerk.external.git :as git]))
 
 (defn run [ctx args]
-  (-> (git/repo ".")
-      (git/tags)
-      (println)))
+  (let [res (-> (git/repo ".")
+                (git/tags))]
+    (if res
+      {:status 0
+       :console-out res}
+      {:status 1
+       :console-out "could not fetch tags"})))

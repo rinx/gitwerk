@@ -5,7 +5,7 @@
    [gitwerk.external.git :as git]
    [gitwerk.service.semver :as semver]))
 
-(defn run [ctx args]
+(defn semver [ctx args]
   (let [semver-type (-> (first args)
                         (string/lower-case)
                         (keyword))
@@ -18,8 +18,15 @@
         (semver/latest-tag)
         (semver/str->version)
         (semver-func)
-        (semver/version->str)
-        (println))))
+        (semver/version->str))))
+
+(defn run [ctx args]
+  (let [res (semver ctx args)]
+    (if res
+      {:status 0
+       :console-out res}
+      {:status 1
+       :console-out "nothing updated"})))
 
 (comment
   (run {} ["patch"])

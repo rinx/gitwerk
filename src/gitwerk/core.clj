@@ -4,12 +4,7 @@
    [clojure.tools.cli :as cli]
    [clojure.edn :as edn]
    [clojure.java.io :as io]
-   [camel-snake-kebab.core :as csk]
-   [gitwerk.command.clone :as command.clone]
-   [gitwerk.command.log :as command.log]
-   [gitwerk.command.semver :as command.semver]
-   [gitwerk.command.semver-auto :as command.semver-auto]
-   [gitwerk.command.tag :as command.tag])
+   [gitwerk.service.runner :as runner])
   (:gen-class))
 
 (def cli-header "Usage: gitwerk [command] [options]")
@@ -17,20 +12,33 @@
   [["-f" "--file PATH" "config"
     :id :config-filename
     :default "config.edn"]
+   ["-e" "--edn" :id :edn?]
    ["-d" "--debug" :id :debug?]
    ["-h" "--help" :id :help?]])
 
-(defn run
-  [{:keys [command args options summary] :as ctx}]
-  (case (csk/->kebab-case-keyword command)
-    :clone (command.clone/run ctx args)
-    :log (command.log/run ctx args)
-    :semver (command.semver/run ctx args)
-    :semver-auto (command.semver-auto/run ctx args)
-    :tag (command.tag/run ctx args)
-    (do
+(defn edn-output
+  [ctx res]
+  (println res))
+
+(defn std-output
+  [{:keys [summary] :as ctx}
+   {:keys [status invalid-arg? console-out]}]
+    (when console-out
+      (println console-out))
+    (when invalid-arg?
       (println cli-header)
-      (println summary))))
+      (println summary))
+    (if status
+      (System/exit status)
+      (System/exit 1)))
+
+(defn run
+  [{:keys [options] :as ctx}]
+  (let [{:keys [edn?]} options
+        res (runner/run ctx)]
+    (if edn?
+      (edn-output ctx res)
+      (std-output ctx res))))
 
 (defn main
   [{:keys [options summary arguments] :as parsed-result}]
@@ -51,6 +59,7 @@
         (cli/parse-opts cli-options)
         (main))
     (catch Exception e
-      (println (.getMessage e)))
+      (println (.getMessage e))
+      (System/exit 1))
     (finally
       (shutdown-agents))))
