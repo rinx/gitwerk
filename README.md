@@ -77,6 +77,38 @@ $ gitwerk semver major
 v1.0.0
 ```
 
+### sci
+
+gitwerk supports to run user-defined scripts written in clojure (powered by [borkdude/sci](https://github.com/borkdude/sci)).
+
+```
+## can read stdin
+$ echo '(semver ctx ["patch"])' | gitwerk sci
+v0.0.2
+
+## also read a file as a script
+$ cat examples/example1.clj
+(semver ctx ["patch"])
+$ gitwerk sci examples/example1.clj
+v0.0.3
+
+## fetch executed command result and modify returned message
+$ cat examples/example2.clj
+(let [res (semver-auto ctx nil)
+      status (get-in res [:console-out :status])
+      oldv (get-in res [:console-out :old-version])
+      newv (get-in res [:console-out :new-version])]
+  (if (= status :updated)
+    (str "Version updated: " oldv " -> " newv)
+    "Version not updated"))
+$ gitwerk sci examples/example2.clj
+Version not updated
+
+$ git commit --allow-empty -m "[patch] version updated"
+$ gitwerk sci examples/example2.clj
+Version updated: v0.0.3 -> v0.0.4
+```
+
 ## License
 
 Copyright © 2019 rinx
