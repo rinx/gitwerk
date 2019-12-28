@@ -16,6 +16,7 @@
             body (if (nil? file)
                    (internal.io/read-from-stdin)
                    (internal.io/safe-read file))
+            ctx (dissoc ctx :command :summary)
             opts (-> sci-opts
                      (update
                        :bindings
