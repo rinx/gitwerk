@@ -3,6 +3,7 @@
    [clojure.spec.alpha :as spec]
    [clojure.tools.cli :as cli]
    [clojure.string :as string]
+   [clojure.pprint :as pprint]
    [clojure.edn :as edn]
    [clojure.java.io :as io]
    [gitwerk.service.runner :as runner])
@@ -10,19 +11,19 @@
 
 (def cli-header
   (string/join
-    "\n"
+   "\n"
+   (concat
     ["gitwerk is a CLI tool for supporting Git(Hub) operations on CI."
      ""
      "Usage: gitwerk [command] [options]"
      ""
-     "Available commands:"
-     "  clone [url]   clone git repository"
-     "  log           show git logs of current directory"
-     "  semver [type] print incremented version"
-     "  semver-auto   increment version by latest git log message contexts"
-     "  tag           show git tags of current directory"
-     ""
-     "Options:"]))
+     "Available commands:"]
+    (mapv (fn [[k v]]
+            (let [name (format "  %-12s " (name k))
+                  desc (:description v)]
+              (str name desc))) runner/definitions)
+    [""
+     "Options:"])))
 (def cli-options
   [["-f" "--file PATH" "config"
     :id :config-filename
@@ -33,19 +34,21 @@
 
 (defn edn-output
   [ctx res]
-  (println res))
+  (pprint/pprint res))
 
 (defn std-output
   [{:keys [summary] :as ctx}
    {:keys [status invalid-arg? console-out]}]
-    (when console-out
-      (println console-out))
-    (when invalid-arg?
-      (println cli-header)
-      (println summary))
-    (if status
-      (System/exit status)
-      (System/exit 1)))
+  (when console-out
+    (if (map? console-out)
+      (pprint/pprint console-out)
+      (println console-out)))
+  (when invalid-arg?
+    (println cli-header)
+    (println summary))
+  (if status
+    (System/exit status)
+    (System/exit 1)))
 
 (defn run
   [{:keys [options] :as ctx}]
