@@ -23,7 +23,7 @@ increments version by git log message contexts.
 
 [semver workflow of this repository](https://github.com/rinx/gitwerk/blob/master/.github/workflows/semver.yml) is an example of this subcommand.
 
-```
+```bash
 ## when the latest tag is v0.0.1
 $ git commit -m "[patch] increment patch version"
 ## the commit comment contains "[patch]"
@@ -64,7 +64,7 @@ $ gitwerk semver-auto
 
 prints incremented version.
 
-```
+```bash
 ## when the latest tag is v0.0.1
 
 $ gitwerk semver patch
@@ -81,7 +81,7 @@ v1.0.0
 
 gitwerk supports to run user-defined scripts written in clojure (powered by [borkdude/sci](https://github.com/borkdude/sci)).
 
-```
+```bash
 ## can read stdin
 $ echo '(semver ctx ["patch"])' | gitwerk sci
 v0.0.2
@@ -107,6 +107,12 @@ Version not updated
 $ git commit --allow-empty -m "[patch] version updated"
 $ gitwerk sci examples/example2.clj
 Version updated: v0.0.3 -> v0.0.4
+
+## http get/post using clj-http-lite.client
+$ echo '(http/get "https://api.github.com/repos/rinx/gitwerk/issues")' | gitwerk sci
+
+## parse json
+$ echo '(-> (http/get "https://api.github.com/repos/rinx/gitwerk/issues") (json/read-value))' | gitwerk sci
 ```
 
 ## License

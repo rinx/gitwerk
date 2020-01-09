@@ -2,12 +2,20 @@
   (:require
    [clojure.spec.alpha :as spec]
    [clojure.pprint :as pprint]
+   [clojure.edn :as edn]
    [sci.core :as sci]
-   [gitwerk.internal.io :as internal.io]))
+   [clj-http.lite.client :as http]
+   [gitwerk.internal.io :as internal.io]
+   [gitwerk.internal.json :as json]))
 
 (def clj-primitives
   {'println println
-   'pprint pprint/pprint})
+   'pprint pprint/pprint
+   'json/read-value json/read-value
+   'edn/read-string edn/read-string
+   'env #(or (System/getenv %) "")
+   'http/get http/get
+   'http/post http/post})
 
 (defn run-fn [sci-opts]
   (fn [ctx args]
