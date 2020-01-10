@@ -109,10 +109,10 @@ $ gitwerk sci examples/example2.clj
 Version updated: v0.0.3 -> v0.0.4
 
 ## http get/post using clj-http-lite.client
-$ echo '(-> (http/get "https://api.github.com/repos/rinx/gitwerk/issues") println)' | gitwerk sci
+$ echo '(-> (http/get "https://api.github.com/repos/rinx/gitwerk/issues") pprint)' | gitwerk sci
 
 ## parse json and convert to clj map
-$ echo '(-> (http/get "https://api.github.com/repos/rinx/gitwerk/issues") :body (json/read-value) println)' | gitwerk sci
+$ echo '(-> (http/get "https://api.github.com/repos/rinx/gitwerk/issues") :body (json/read-value) pprint)' | gitwerk sci
 ```
 
 ## License

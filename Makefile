@@ -68,7 +68,6 @@ gitwerk: \
 	--initialize-at-build-time \
 	-H:IncludeResourceBundles=org.eclipse.jgit.internal.JGitText \
 	--allow-incomplete-classpath \
-	--static \
 	-J-Xms$(XMS) \
 	-J-Xmx$(XMX)
 
