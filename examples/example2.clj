@@ -1,4 +1,4 @@
-(let [res (semver-auto ctx nil)
+(let [res (ctx-semver ctx nil)
       status (get-in res [:console-out :status])
       oldv (get-in res [:console-out :old-version])
       newv (get-in res [:console-out :new-version])]

@@ -1,4 +1,4 @@
-(ns gitwerk.service.semver-auto
+(ns gitwerk.service.ctx-semver
   (:require
     [clojure.spec.alpha :as spec]
     [clojure.string :as string]
@@ -15,7 +15,7 @@
   (let [matches (nth matches 0)]
     (nth matches 2)))
 
-(defn semver-auto [message tag]
+(defn ctx-semver [message tag]
   (let [pats default-patterns
         patch-matches (re-seq (re-pattern (:patch pats)) message)
         minor-matches (re-seq (re-pattern (:minor pats)) message)

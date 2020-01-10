@@ -3,10 +3,10 @@
    [clojure.spec.alpha :as spec]
    [camel-snake-kebab.core :as csk]
    [gitwerk.command.clone :as command.clone]
+   [gitwerk.command.ctx-semver :as command.ctx-semver]
    [gitwerk.command.log :as command.log]
    [gitwerk.command.sci :as command.sci]
    [gitwerk.command.semver :as command.semver]
-   [gitwerk.command.semver-auto :as command.semver-auto]
    [gitwerk.command.tag :as command.tag]))
 
 (def primitives
@@ -20,8 +20,11 @@
    {:command command.semver/run
     :description "print incremented version"}
    :semver-auto
-   {:command command.semver-auto/run
-    :description "increment version by latest git log message contexts"}
+   {:command command.ctx-semver/run
+    :description "alias of ctx-semver"}
+   :ctx-semver
+   {:command command.ctx-semver/run
+    :description "contextual semver: increment version by latest git log message contexts"}
    :tag
    {:command command.tag/run
     :description "show git tags of current directory"}})

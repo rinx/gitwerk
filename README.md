@@ -17,7 +17,9 @@ It is available to download native binaries for Linux and macOS from the [latest
 
 gitwerk has several subcommands.
 
-### semver-auto
+Please execute `gitwerk --help` to see all features.
+
+### contextual semantic versioning
 
 increments version by git log message contexts.
 
@@ -28,7 +30,7 @@ increments version by git log message contexts.
 $ git commit -m "[patch] increment patch version"
 ## the commit comment contains "[patch]"
 
-$ gitwerk semver-auto
+$ gitwerk ctx-semver
 {:status :updated :old-version v0.0.1 :new-version v0.0.2}
 ## increments tag to v0.0.2
 
@@ -37,7 +39,7 @@ $ gitwerk semver-auto
 $ git commit -m "[tag.suffix=-alpha] [minor] increment minor version and add suffix"
 ## the commit comment contains "[minor]" and "[tag.suffix=-alpha]"
 
-$ gitwerk semver-auto
+$ gitwerk ctx-semver
 {:status :updated :old-version v0.0.2 :new-version v0.1.0-alpha}
 ## increments tag to v0.1.0-alpha
 
@@ -46,7 +48,7 @@ $ gitwerk semver-auto
 $ git commit -m "[tag.prefix=] [tag.suffix=] [major] increment major version and remove prefix and suffix"
 ## the commit comment contains "[major]", "[tag.prefix=]" and "[tag.suffix=]"
 
-$ gitwerk semver-auto
+$ gitwerk ctx-semver
 {:status :updated :old-version v0.1.0-alpha :new-version 1.0.0}
 ## increments tag to 1.0.0
 
@@ -55,26 +57,9 @@ $ gitwerk semver-auto
 $ git commit -m "[tag.prefix=v] just adding prefix"
 ## the commit comment contains "[tag.prefix=v]"
 
-$ gitwerk semver-auto
+$ gitwerk ctx-semver
 {:status :updated :old-version 1.0.0 :new-version v1.0.0}
 ## increments tag to v1.0.0
-```
-
-### semver
-
-prints incremented version.
-
-```bash
-## when the latest tag is v0.0.1
-
-$ gitwerk semver patch
-v0.0.2
-
-$ gitwerk semver minor
-v0.1.0
-
-$ gitwerk semver major
-v1.0.0
 ```
 
 ### sci
@@ -94,7 +79,7 @@ v0.0.3
 
 ## fetch executed command result and modify returned message
 $ cat examples/example2.clj
-(let [res (semver-auto ctx nil)
+(let [res (ctx-semver ctx nil)
       status (get-in res [:console-out :status])
       oldv (get-in res [:console-out :old-version])
       newv (get-in res [:console-out :new-version])]
@@ -117,7 +102,7 @@ $ echo '(-> (http/get "https://api.github.com/repos/rinx/gitwerk/issues") :body 
 
 ## License
 
-Copyright © 2019 rinx
+Copyright © 2019-2020 rinx
 
 This program and the accompanying materials are made available under the
 terms of the Eclipse Public License 2.0 which is available at

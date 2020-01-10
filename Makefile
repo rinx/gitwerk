@@ -34,7 +34,7 @@ profile/native-image-config: \
 	    -jar ../$(TARGET_JAR) tag)
 	(cd gitwerk; \
 	    java -agentlib:native-image-agent=config-merge-dir=../$(NATIVE_IMAGE_CONFIG_OUTPUT_DIR) \
-	    -jar ../$(TARGET_JAR) semver-auto)
+	    -jar ../$(TARGET_JAR) ctx-semver)
 	rm -rf gitwerk
 
 $(NATIVE_IMAGE_CONFIG_OUTPUT_DIR):
