@@ -7,6 +7,8 @@
    [gitwerk.command.log :as command.log]
    [gitwerk.command.sci :as command.sci]
    [gitwerk.command.semver :as command.semver]
+   [gitwerk.command.release :as command.release]
+   [gitwerk.command.latest-release :as command.latest-release]
    [gitwerk.command.tag :as command.tag]))
 
 (def primitives
@@ -25,6 +27,12 @@
    :ctx-semver
    {:command command.ctx-semver/run
     :description "contextual semver: increment version by latest git log message contexts"}
+   :release
+   {:command command.release/run
+    :description "create release"}
+   :latest-release
+   {:command command.latest-release/run
+    :description "get latest release"}
    :tag
    {:command command.tag/run
     :description "show git tags of current directory"}})

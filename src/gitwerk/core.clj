@@ -6,6 +6,7 @@
    [clojure.pprint :as pprint]
    [clojure.edn :as edn]
    [clojure.java.io :as io]
+   [gitwerk.internal.env :as env]
    [gitwerk.service.runner :as runner])
   (:gen-class))
 
@@ -19,18 +20,17 @@
      ""
      "Available commands:"]
     (mapv (fn [[k v]]
-            (let [name (format "  %-12s " (name k))
+            (let [name (format "  %-16s " (name k))
                   desc (:description v)]
               (str name desc))) runner/definitions)
     [""
      "Options:"])))
+
 (def cli-options
-  [["-f" "--file PATH" "config"
-    :id :config-filename
-    :default "config.edn"]
-   ["-e" "--edn" :id :edn?]
-   ["-d" "--debug" :id :debug?]
-   ["-h" "--help" :id :help?]])
+  [["-f" "--file PATH" "filename of config" :id :config-flename]
+   ["-e" "--edn" "print result in edn format" :id :edn?]
+   ["-d" "--debug" "debug flag" :id :debug?]
+   ["-h" "--help" "print help" :id :help?]])
 
 (defn edn-output
   [ctx res]
@@ -64,7 +64,8 @@
         ctx {:command (first arguments)
              :args (drop 1 arguments)
              :options options
-             :summary summary}]
+             :summary summary
+             :env (env/read-envs)}]
     (if (or help? (nil? (:command ctx)))
       (do
         (println cli-header)
@@ -74,7 +75,9 @@
 (defn -main [& args]
   (try
     (-> args
-        (cli/parse-opts cli-options)
+        (cli/parse-opts
+         cli-options
+         :in-order true)
         (main))
     (catch Exception e
       (println (.getMessage e))
