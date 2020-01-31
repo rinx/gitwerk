@@ -28,6 +28,7 @@
   [["-f" "--file PATH" "config"
     :id :config-filename
     :default "config.edn"]
+   [nil "--dry-run" :id :dry-run?]
    ["-e" "--edn" :id :edn?]
    ["-d" "--debug" :id :debug?]
    ["-h" "--help" :id :help?]])
