@@ -9,6 +9,7 @@
                  [metosin/jsonista "0.2.2"]
                  [camel-snake-kebab "0.4.0"]
                  [io.quarkus/quarkus-jgit "1.2.0.Final"]
+                 [io.quarkus/quarkus-core-deployment "1.2.0.Final"]
                  [io.quarkus/quarkus-jsch-deployment "1.2.0.Final"]
                  [borkdude/sci "0.0.12-alpha.7"]
                  [org.martinklepsch/clj-http-lite "0.4.3"]]
