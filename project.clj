@@ -5,9 +5,9 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.10.2-alpha1"]
                  [org.clojure/tools.cli "0.4.2"]
-                 [metosin/jsonista "0.2.2"]
+                 [metosin/jsonista "0.2.5"]
                  [camel-snake-kebab "0.4.0"]
-                 [io.quarkus/quarkus-jgit "1.1.0.CR1"]
+                 [io.quarkus/quarkus-jgit "1.4.1.Final"]
                  [borkdude/sci "0.0.13-alpha.17"]
                  [org.martinklepsch/clj-http-lite "0.4.3"]]
   :plugins [[io.taylorwood/lein-native-image "0.3.1"]]
@@ -29,7 +29,7 @@
                         "-H:IncludeResourceBundles=org.eclipse.jgit.internal.JGitText"
                         "--allow-incomplete-classpath"
                         "-J-Xms2g"
-                        "-J-Xmx6g"]
+                        "-J-Xmx7g"]
                  :jvm-opts ["-Dclojure.spec.skip-macros=true"
                             "-Dclojure.compiler.direct-linking=true"]}
   :profiles {:dev {:dependencies [[org.clojure/tools.namespace "0.2.11"]
