@@ -1,6 +1,5 @@
 (ns gitwerk.internal.json
   (:require
-   [clojure.spec.alpha :as spec]
    [jsonista.core :as jsonista]
    [camel-snake-kebab.core :as csk]))
 
@@ -11,3 +10,6 @@
 
 (defn read-value [obj]
   (jsonista/read-value obj json-mapper))
+
+(def exports
+  {'read-value read-value})

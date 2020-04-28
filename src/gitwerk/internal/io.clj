@@ -1,6 +1,5 @@
 (ns gitwerk.internal.io
   (:require
-    [clojure.spec.alpha :as spec]
     [clojure.java.io :as io]
     [clojure.string :as string])
   (:import
@@ -18,3 +17,7 @@
     (throw
       (Exception.
         (str "File not found: " file)))))
+
+(def exports
+  {'read-from-stdin read-from-stdin
+   'safe-read safe-read})

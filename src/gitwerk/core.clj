@@ -1,6 +1,5 @@
 (ns gitwerk.core
   (:require
-   [clojure.spec.alpha :as spec]
    [clojure.tools.cli :as cli]
    [clojure.string :as string]
    [clojure.pprint :as pprint]
@@ -15,20 +14,13 @@
    (concat
     ["gitwerk is a CLI tool for supporting Git(Hub) operations on CI."
      ""
-     "Usage: gitwerk [command] [options]"
+     "Usage: gitwerk [options] [command]"
      ""
-     "Available commands:"]
-    (mapv (fn [[k v]]
-            (let [name (format "  %-12s " (name k))
-                  desc (:description v)]
-              (str name desc))) runner/definitions)
-    [""
      "Options:"])))
 (def cli-options
   [["-f" "--file PATH" "config"
-    :id :config-filename
-    :default "config.edn"]
-   [nil "--dry-run" :id :dry-run?]
+    :id :filename]
+   [nil "--stdin" :id :stdin?]
    ["-e" "--edn" :id :edn?]
    ["-d" "--debug" :id :debug?]
    ["-h" "--help" :id :help?]])
