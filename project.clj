@@ -10,6 +10,28 @@
                  [io.quarkus/quarkus-jgit "1.1.0.CR1"]
                  [borkdude/sci "0.0.13-alpha.17"]
                  [org.martinklepsch/clj-http-lite "0.4.3"]]
+  :plugins [[io.taylorwood/lein-native-image "0.3.1"]]
+  :native-image {:name "gitwerk"
+                 :opts ["-H:+ReportExceptionStackTraces"
+                        "-H:Log=registerResource:"
+                        "-H:ConfigurationFileDirectories=native-config"
+                        "--enable-url-protocols=http,https"
+                        "--enable-all-security-services"
+                        "-H:+JNI"
+                        "--verbose"
+                        "--no-fallback"
+                        "--no-server"
+                        "--report-unsupported-elements-at-runtime"
+                        "--initialize-at-run-time=org.eclipse.jgit.transport.HttpAuthMethod$$Digest"
+                        "--initialize-at-run-time=org.eclipse.jgit.lib.GpgSigner"
+                        "--initialize-at-run-time=io.quarkus.jgit.runtime.PortWatcherRunTime"
+                        "--initialize-at-build-time"
+                        "-H:IncludeResourceBundles=org.eclipse.jgit.internal.JGitText"
+                        "--allow-incomplete-classpath"
+                        "-J-Xms2g"
+                        "-J-Xmx6g"]
+                 :jvm-opts ["-Dclojure.spec.skip-macros=true"
+                            "-Dclojure.compiler.direct-linking=true"]}
   :profiles {:dev {:dependencies [[org.clojure/tools.namespace "0.2.11"]
                                   [orchestra "2019.02.06-1"]]
                    :source-paths ["dev"]}

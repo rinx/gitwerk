@@ -21,9 +21,7 @@ RUN lein uberjar
 
 COPY native-config native-config
 
-COPY Makefile Makefile
-
-RUN make
+RUN lein native-image
 
 RUN mkdir -p /out/lib \
     && cp $JAVA_HOME/jre/lib/amd64/libsunec.so /out/lib/ \
