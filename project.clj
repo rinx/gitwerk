@@ -24,7 +24,7 @@
                         "--report-unsupported-elements-at-runtime"
                         "--initialize-at-run-time=org.eclipse.jgit.transport.HttpAuthMethod$$Digest"
                         "--initialize-at-run-time=org.eclipse.jgit.lib.GpgSigner"
-                        "--initialize-at-run-time=io.quarkus.jgit.runtime.PortWatcherRunTime"
+                        "--initialize-at-run-time=io.quarkus.jsch.runtime.PortWatcherRunTime"
                         "--initialize-at-build-time"
                         "-H:IncludeResourceBundles=org.eclipse.jgit.internal.JGitText"
                         "--allow-incomplete-classpath"
