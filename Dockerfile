@@ -34,6 +34,6 @@ LABEL maintainer "rinx <rintaro.okamura@gmail.com>"
 RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 
 COPY --from=graalvm /out /gitwerk-libs
-COPY --from=graalvm /gitwerk/gitwerk /gitwerk
+COPY --from=graalvm /gitwerk/target/gitwerk /gitwerk
 
 CMD ["/gitwerk", "-Djava.library.path=/gitwerk-libs/lib", "-Djavax.net.ssl.trustStore=/gitwerk-libs"]
