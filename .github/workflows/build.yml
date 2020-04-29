@@ -36,6 +36,7 @@ jobs:
         run: |
           ./lein native-image
           # upx --lzma --best gitwerk
+          mv target/gitwerk gitwerk
           zip --junk-paths gitwerk-linux-amd64 gitwerk
       - name: Upload artifact
         uses: actions/upload-artifact@v1
@@ -71,6 +72,7 @@ jobs:
       - name: Build native image
         run: |
           lein native-image
+          mv target/gitwerk gitwerk
           zip --junk-paths gitwerk-macos-amd64 gitwerk
       - name: Upload artifact
         uses: actions/upload-artifact@v1
