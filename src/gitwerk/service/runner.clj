@@ -34,7 +34,7 @@
               :bindings (merge primitives/clj-primitives
                                {'ctx ctx
                                 'prelude (fn [] prelude/default)})
-              :preset :termination-safe
+              :deny '[loop recur trampoline]
               :env env}
         ret-fn (fn [status out]
                  {:status status
