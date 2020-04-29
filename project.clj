@@ -14,7 +14,7 @@
   :native-image {:name "gitwerk"
                  :opts ["-H:+ReportExceptionStackTraces"
                         "-H:Log=registerResource:"
-                        "-H:ConfigurationFileDirectories=native-config"
+                        "-H:ReflectionConfigurationFiles=reflection.json"
                         "--enable-url-protocols=http,https"
                         "--enable-all-security-services"
                         "-H:+JNI"
