@@ -14,14 +14,17 @@
    (concat
     ["gitwerk is a CLI tool for supporting Git(Hub) operations on CI."
      ""
-     "Usage: gitwerk [options] [command]"
+     "Usage: gitwerk [options] [function] [args...]"
      ""
      "Options:"])))
+
 (def cli-options
-  [["-f" "--file PATH" "config"
+  [["-f" "--file PATH" "load functions from file"
     :id :filename]
-   [nil "--stdin" :id :stdin?]
-   ["-e" "--edn" :id :edn?]
+   [nil "--stdin" "load functions from stdin"
+    :id :stdin?]
+   ["-e" "--edn" "edn output format"
+    :id :edn?]
    ["-d" "--debug" :id :debug?]
    ["-h" "--help" :id :help?]])
 
