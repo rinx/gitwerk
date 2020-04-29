@@ -1,6 +1,4 @@
-(ns gitwerk.external.git
- (:require
-   [clojure.spec.alpha :as spec])
+(ns gitwerk.internal.git
  (:import
    [java.io File]
    [org.eclipse.jgit.api CloneCommand Git]
@@ -57,6 +55,16 @@
       (.tag)
       (.setName tag-name)
       (.call)))
+
+(def exports
+  {'clone clone
+   'repo repo
+   'parse-person parse-person
+   'parse-log parse-log
+   'logs logs
+   'tags tags
+   'latest-log latest-log
+   'tag tag})
 
 (comment
   (-> (repo ".")

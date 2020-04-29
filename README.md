@@ -15,9 +15,61 @@ It is available to download native binaries for Linux and macOS from the [latest
 
 ## Usage
 
-gitwerk has several subcommands.
+gitwerk has several default functions.
 
-### semver-auto
+- `clone`
+- `log`
+- `tag`
+- `contextual-semver`
+
+The definitions of these functions can be printed by `prelude` function.
+
+```bash
+$ gitwerk prelude
+(defn clone [repository]
+  (git/clone repository))
+
+(defn log
+ ([]
+  (log "."))
+ ([repodir]
+  (-> (git/repo repodir)
+      (git/logs))))
+
+(defn tag
+  ([]
+   (tag "."))
+  ([repodir]
+   (-> (git/repo repodir)
+       (git/tags))))
+
+(defn repl []
+  (println "not implemented yet"))
+
+(defn contextual-semver
+  ([]
+   (contextual-semver "."))
+  ([repodir]
+   (let [repo (git/repo repodir)
+         message (-> repo
+                     (git/latest-log)
+                     :full-message)
+         tag (or (-> repo
+                     (git/tags)
+                     (semver/latest-tag))
+                 (semver/default-version-str))
+         new-tag (semver/contextual-semver message tag)]
+     (if (not (= tag new-tag))
+       (do
+         (git/tag repo new-tag)
+         {:status :updated
+          :old-version tag
+          :new-version new-tag})
+       {:status :not-updated}))))
+```
+
+
+### contextual-semver
 
 increments version by git log message contexts.
 
@@ -28,7 +80,7 @@ increments version by git log message contexts.
 $ git commit -m "[patch] increment patch version"
 ## the commit comment contains "[patch]"
 
-$ gitwerk semver-auto
+$ gitwerk contextual-semver
 {:status :updated :old-version v0.0.1 :new-version v0.0.2}
 ## increments tag to v0.0.2
 
@@ -37,7 +89,7 @@ $ gitwerk semver-auto
 $ git commit -m "[tag.suffix=-alpha] [minor] increment minor version and add suffix"
 ## the commit comment contains "[minor]" and "[tag.suffix=-alpha]"
 
-$ gitwerk semver-auto
+$ gitwerk contextual-semver
 {:status :updated :old-version v0.0.2 :new-version v0.1.0-alpha}
 ## increments tag to v0.1.0-alpha
 
@@ -46,7 +98,7 @@ $ gitwerk semver-auto
 $ git commit -m "[tag.prefix=] [tag.suffix=] [major] increment major version and remove prefix and suffix"
 ## the commit comment contains "[major]", "[tag.prefix=]" and "[tag.suffix=]"
 
-$ gitwerk semver-auto
+$ gitwerk contextual-semver
 {:status :updated :old-version v0.1.0-alpha :new-version 1.0.0}
 ## increments tag to 1.0.0
 
@@ -55,69 +107,28 @@ $ gitwerk semver-auto
 $ git commit -m "[tag.prefix=v] just adding prefix"
 ## the commit comment contains "[tag.prefix=v]"
 
-$ gitwerk semver-auto
+$ gitwerk contextual-semver
 {:status :updated :old-version 1.0.0 :new-version v1.0.0}
 ## increments tag to v1.0.0
 ```
 
-### semver
 
-prints incremented version.
+### Define your own functions
 
-```bash
-## when the latest tag is v0.0.1
-
-$ gitwerk semver patch
-v0.0.2
-
-$ gitwerk semver minor
-v0.1.0
-
-$ gitwerk semver major
-v1.0.0
-```
-
-### sci
-
-gitwerk supports to run user-defined scripts written in clojure (powered by [borkdude/sci](https://github.com/borkdude/sci)).
+You can define your own functions and load them by using `--file` option or `--stdin` option.
 
 ```bash
-## can read stdin
-$ echo '(semver ctx ["patch"])' | gitwerk sci
-v0.0.2
-
-## also read a file as a script
-$ cat examples/example1.clj
-(semver ctx ["patch"])
-$ gitwerk sci examples/example1.clj
-v0.0.3
-
-## fetch executed command result and modify returned message
-$ cat examples/example2.clj
-(let [res (semver-auto ctx nil)
-      status (get-in res [:console-out :status])
-      oldv (get-in res [:console-out :old-version])
-      newv (get-in res [:console-out :new-version])]
-  (if (= status :updated)
-    (str "Version updated: " oldv " -> " newv)
-    "Version not updated"))
-$ gitwerk sci examples/example2.clj
-Version not updated
-
-$ git commit --allow-empty -m "[patch] version updated"
-$ gitwerk sci examples/example2.clj
-Version updated: v0.0.3 -> v0.0.4
-
-## http get/post using clj-http-lite.client
-$ echo '(-> (http/get "https://api.github.com/repos/rinx/gitwerk/issues") pprint)' | gitwerk sci
-
-## parse json and convert to clj map
-$ echo '(-> (http/get "https://api.github.com/repos/rinx/gitwerk/issues") :body (json/read-value) pprint)' | gitwerk sci
+gitwerk --stdin myfunc
+(defn myfunc []
+  (print "this is my first func"))
 ```
+
+Available functions are non-side-effecting functions enabled in [sci](https://github.com/borkdude/sci) and the exported functions in gitwerk.internal and gitwerk.prelude namespaces.
+
 
 ## License
 
-Copyright © 2019 rinx
+Copyright © 2019-2020 rinx
 
 This program and the accompanying materials are made available under the
 terms of the Eclipse Public License 2.0 which is available at

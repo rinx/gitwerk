@@ -21,9 +21,7 @@ RUN lein uberjar
 
 COPY native-config native-config
 
-COPY Makefile Makefile
-
-RUN make
+RUN lein native-image
 
 RUN mkdir -p /out/lib \
     && cp $JAVA_HOME/jre/lib/amd64/libsunec.so /out/lib/ \
@@ -36,6 +34,6 @@ LABEL maintainer "rinx <rintaro.okamura@gmail.com>"
 RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 
 COPY --from=graalvm /out /gitwerk-libs
-COPY --from=graalvm /gitwerk/gitwerk /gitwerk
+COPY --from=graalvm /gitwerk/target/gitwerk /gitwerk
 
 CMD ["/gitwerk", "-Djava.library.path=/gitwerk-libs/lib", "-Djavax.net.ssl.trustStore=/gitwerk-libs"]
