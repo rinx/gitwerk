@@ -118,7 +118,7 @@ $ gitwerk contextual-semver
 You can define your own functions and load them by using `--file` option or `--stdin` option.
 
 ```bash
-gitwerk --stdin myfunc
+$ gitwerk --stdin myfunc
 (defn myfunc []
   (print "this is my first func"))
 ```
