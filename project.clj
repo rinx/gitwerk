@@ -27,10 +27,10 @@
                         "--initialize-at-build-time"
                         "-H:IncludeResourceBundles=org.eclipse.jgit.internal.JGitText"
                         "--allow-incomplete-classpath"
+                        "-J-Dclojure.spec.skip-macros=true"
+                        "-J-Dclojure.compiler.direct-linking=true"
                         "-J-Xms2g"
-                        "-J-Xmx7g"]
-                 :jvm-opts ["-Dclojure.spec.skip-macros=true"
-                            "-Dclojure.compiler.direct-linking=true"]}
+                        "-J-Xmx7g"]}
   :profiles {:uberjar {:aot :all
                        :global-vars {*assert* false}
                        :jvm-opts ["-Dclojure.spec.skip-macros=true"
