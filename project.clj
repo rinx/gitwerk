@@ -31,8 +31,8 @@
                         "-J-Xmx7g"]
                  :jvm-opts ["-Dclojure.spec.skip-macros=true"
                             "-Dclojure.compiler.direct-linking=true"]}
-  :profiles {:dev {:dependencies [[org.clojure/tools.namespace "0.2.11"]
-                                  [orchestra "2019.02.06-1"]]
-                   :source-paths ["dev"]}
-             :uberjar {:aot :all
+  :profiles {:uberjar {:aot :all
+                       :global-vars {*assert* false}
+                       :jvm-opts ["-Dclojure.spec.skip-macros=true"
+                                  "-Dclojure.compiler.direct-linking=true"]
                        :main gitwerk.core}})
