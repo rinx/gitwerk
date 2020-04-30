@@ -19,7 +19,7 @@ COPY src src
 
 RUN lein uberjar
 
-COPY native-config native-config
+COPY reflection.json reflection.json
 
 RUN lein native-image
 

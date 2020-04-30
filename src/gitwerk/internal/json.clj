@@ -1,15 +1,14 @@
 (ns gitwerk.internal.json
   (:require
-   [jsonista.core :as jsonista]
+   [cheshire.core :as cheshire]
    [camel-snake-kebab.core :as csk]))
 
-(def json-mapper
-  (jsonista/object-mapper
-   {:pretty true
-    :decode-key-fn csk/->kebab-case-keyword}))
-
 (defn read-value [obj]
-  (jsonista/read-value obj json-mapper))
+  (cheshire/parse-string obj csk/->kebab-case-keyword))
+
+(defn write-json [obj]
+  (cheshire/generate-string obj))
 
 (def exports
-  {'read-value read-value})
+  {'read-value read-value
+   'write-json write-json})
