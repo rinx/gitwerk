@@ -1,10 +1,9 @@
 (ns gitwerk.internal.json
   (:require
-   [cheshire.core :as cheshire]
-   [camel-snake-kebab.core :as csk]))
+   [cheshire.core :as cheshire]))
 
 (defn read-value [obj]
-  (cheshire/parse-string obj csk/->kebab-case-keyword))
+  (cheshire/parse-string obj true))
 
 (defn write-json [obj]
   (cheshire/generate-string obj))
