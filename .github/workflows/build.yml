@@ -34,7 +34,7 @@ jobs:
           ./lein uberjar
       - name: Build native image
         run: |
-          make ADDITIONAL_OPTIONS="--static"
+          make gitwerk-static
           upx -9 gitwerk
           zip --junk-paths gitwerk-linux-amd64 gitwerk
       - name: Upload artifact

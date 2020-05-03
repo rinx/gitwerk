@@ -58,7 +58,34 @@ gitwerk: \
 	--initialize-at-build-time \
 	-H:IncludeResourceBundles=org.eclipse.jgit.internal.JGitText \
 	--allow-incomplete-classpath \
-	$(ADDITIONAL_OPTIONS) \
+	-J-Dclojure.spec.skip-macros=true \
+	-J-Dclojure.compiler.direct-linking=true \
+	-J-Xms$(XMS) \
+	-J-Xmx$(XMX)
+
+.PHONY: gitwerk-static
+gitwerk-static: \
+	$(TARGET_JAR)
+	native-image \
+	-jar $(TARGET_JAR) \
+	-H:Name=gitwerk \
+	-H:+ReportExceptionStackTraces \
+	-H:Log=registerResource: \
+	-H:ReflectionConfigurationFiles=reflection.json \
+	--enable-url-protocols=http,https \
+	--enable-all-security-services \
+	-H:+JNI \
+	--verbose \
+	--no-fallback \
+	--no-server \
+	--report-unsupported-elements-at-runtime \
+	--initialize-at-run-time=org.eclipse.jgit.transport.HttpAuthMethod$$Digest \
+	--initialize-at-run-time=org.eclipse.jgit.lib.GpgSigner \
+	--initialize-at-run-time=io.quarkus.jsch.runtime.PortWatcherRunTime \
+	--initialize-at-build-time \
+	-H:IncludeResourceBundles=org.eclipse.jgit.internal.JGitText \
+	--allow-incomplete-classpath \
+	--static \
 	-J-Dclojure.spec.skip-macros=true \
 	-J-Dclojure.compiler.direct-linking=true \
 	-J-Xms$(XMS) \
