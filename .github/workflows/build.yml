@@ -34,8 +34,8 @@ jobs:
           ./lein uberjar
       - name: Build native image
         run: |
-          make
-          # upx --lzma --best gitwerk
+          make ADDITIONAL_OPTIONS="--static"
+          upx -9 gitwerk
           zip --junk-paths gitwerk-linux-amd64 gitwerk
       - name: Upload artifact
         uses: actions/upload-artifact@v1
@@ -63,7 +63,7 @@ jobs:
           JAVA_VERSION: java8
       - name: Install dependencies
         run: |
-          brew install leiningen
+          brew install leiningen upx
           gu install native-image
       - name: Build uberjar
         run: |
@@ -71,6 +71,7 @@ jobs:
       - name: Build native image
         run: |
           make
+          upx -9 gitwerk
           zip --junk-paths gitwerk-macos-amd64 gitwerk
       - name: Upload artifact
         uses: actions/upload-artifact@v1

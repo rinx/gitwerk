@@ -5,6 +5,8 @@ NATIVE_IMAGE_CONFIG_OUTPUT_DIR=native-config
 
 TARGET_JAR=target/gitwerk-0.1.0-SNAPSHOT-standalone.jar
 
+ADDITIONAL_OPTIONS=""
+
 .PHONY: all
 all: gitwerk
 
@@ -56,6 +58,7 @@ gitwerk: \
 	--initialize-at-build-time \
 	-H:IncludeResourceBundles=org.eclipse.jgit.internal.JGitText \
 	--allow-incomplete-classpath \
+	$(ADDITIONAL_OPTIONS) \
 	-J-Dclojure.spec.skip-macros=true \
 	-J-Dclojure.compiler.direct-linking=true \
 	-J-Xms$(XMS) \
