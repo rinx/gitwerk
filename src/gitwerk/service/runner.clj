@@ -7,6 +7,7 @@
    [gitwerk.internal.io :as internal.io]
    [gitwerk.internal.json :as internal.json]
    [gitwerk.internal.semver :as internal.semver]
+   [gitwerk.internal.yaml :as internal.yaml]
    [gitwerk.prelude :as prelude]
    [gitwerk.primitives :as primitives]))
 
@@ -15,7 +16,8 @@
    'github internal.github/exports
    'io internal.io/exports
    'json internal.json/exports
-   'semver internal.semver/exports})
+   'semver internal.semver/exports
+   'yaml internal.yaml/exports})
 
 (defn run
   [{:keys [command args options] :as ctx}]

@@ -3,8 +3,6 @@
    [clojure.tools.cli :as cli]
    [clojure.string :as string]
    [clojure.pprint :as pprint]
-   [clojure.edn :as edn]
-   [clojure.java.io :as io]
    [gitwerk.service.runner :as runner])
   (:gen-class))
 
