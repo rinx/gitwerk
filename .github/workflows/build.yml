@@ -10,6 +10,7 @@ on:
       - 'v*.*.*-*'
   pull_request:
     paths:
+      - .github/**
       - src/**
       - project.clj
       - native-config/**
@@ -25,7 +26,7 @@ jobs:
           java-version: java8
       - name: Install dependencies
         run: |
-          gu install native-image
+          sudo gu install native-image
           curl -o lein https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
           chmod a+x lein
           sudo apt-get update && sudo apt-get install -y upx
