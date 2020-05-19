@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v1
       - uses: rinx/setup-graalvm-ce@v0.0.1
         with:
-          graalvm-version: 20.0.0
+          graalvm-version: 20.1.0
           java-version: java8
       - name: Install dependencies
         run: |
@@ -59,7 +59,7 @@ jobs:
           echo "::set-env name=GRAALVM_HOME::$GRAALVM_HOME"
           echo "::set-env name=JAVA_HOME::$GRAALVM_HOME"
         env:
-          GRAALVM_VERSION: 20.0.0
+          GRAALVM_VERSION: 20.1.0
           JAVA_VERSION: java8
       - name: Install dependencies
         run: |
