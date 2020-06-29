@@ -20,13 +20,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: rinx/setup-graalvm-ce@v0.0.1
+      - uses: rinx/setup-graalvm-ce@v0.0.3
         with:
           graalvm-version: 20.1.0
-          java-version: java8
+          java-version: java11
+          native-image: "true"
       - name: Install dependencies
         run: |
-          sudo gu install native-image
           curl -o lein https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
           chmod a+x lein
           sudo apt-get update && sudo apt-get install -y upx
@@ -61,7 +61,7 @@ jobs:
           echo "::set-env name=JAVA_HOME::$GRAALVM_HOME"
         env:
           GRAALVM_VERSION: 20.1.0
-          JAVA_VERSION: java8
+          JAVA_VERSION: java11
       - name: Install dependencies
         run: |
           brew install leiningen upx

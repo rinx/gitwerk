@@ -8,7 +8,8 @@
                  [cheshire "5.10.0"]
                  [clj-commons/clj-yaml "0.7.1"]
                  [io.quarkus/quarkus-jgit "1.4.1.Final"]
-                 [borkdude/sci "0.0.13-alpha.17"]
+                 [borkdude/sci "0.1.1-alpha.1"]
+                 [borkdude/sci.impl.reflector "0.0.1-java11"]
                  [org.martinklepsch/clj-http-lite "0.4.3"]]
   :profiles {:uberjar {:aot :all
                        :global-vars {*assert* false}
