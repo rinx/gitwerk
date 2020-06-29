@@ -45,8 +45,10 @@ gitwerk: \
 	-H:+ReportExceptionStackTraces \
 	-H:Log=registerResource: \
 	-H:ReflectionConfigurationFiles=reflection.json \
+	-H:+RemoveSaturatedTypeFlows \
 	--enable-url-protocols=http,https \
 	--enable-all-security-services \
+	--install-exit-handlers \
 	-H:+JNI \
 	--verbose \
 	--no-fallback \
