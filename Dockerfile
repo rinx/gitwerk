@@ -25,8 +25,8 @@ COPY Makefile Makefile
 RUN make
 
 RUN mkdir -p /out/lib \
-    && cp $JAVA_HOME/jre/lib/amd64/libsunec.so /out/lib/ \
-    && cp $JAVA_HOME/jre/lib/security/cacerts /out
+    && cp $JAVA_HOME/lib/libsunec.so /out/lib/ \
+    && cp $JAVA_HOME/lib/security/cacerts /out
 
 FROM ubuntu:latest
 

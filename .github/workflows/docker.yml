@@ -25,7 +25,7 @@ jobs:
       run: |
         docker build -t gitwerk . --build-arg GRAALVM_VERSION=${GRAALVM_VERSION}
       env:
-        GRAALVM_VERSION: '19.3.0'
+        GRAALVM_VERSION: '20.1.0-java11'
     - name: Login to DockerHub
       run: |
         echo ${DOCKERHUB_PASS} | docker login --username ${DOCKERHUB_USER} --password-stdin
