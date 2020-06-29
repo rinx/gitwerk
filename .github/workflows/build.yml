@@ -20,11 +20,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: rinx/setup-graalvm-ce@v0.0.3
+      - uses: rinx/setup-graalvm-ce@v0.0.4
         with:
-          graalvm-version: 20.1.0
-          java-version: java11
+          graalvm-version: "20.1.0"
+          java-version: "java11"
           native-image: "true"
+      - name: echo versions
+        run: |
+          java -version
+          native-image --version
       - name: Install dependencies
         run: |
           curl -o lein https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
