@@ -40,7 +40,7 @@ jobs:
       - name: Build native image
         run: |
           make gitwerk
-          upx -9 gitwerk
+          upx --lzma --best gitwerk
           zip --junk-paths gitwerk-linux-amd64 gitwerk
       - name: Upload artifact
         uses: actions/upload-artifact@v1
@@ -71,7 +71,7 @@ jobs:
       - name: Build native image
         run: |
           make gitwerk-static
-          upx -9 gitwerk
+          upx --lzma --best gitwerk
           zip --junk-paths gitwerk-linux-static-amd64 gitwerk
       - name: Upload artifact
         uses: actions/upload-artifact@v1
@@ -107,7 +107,7 @@ jobs:
       - name: Build native image
         run: |
           make
-          upx -9 gitwerk
+          upx --lzma --best gitwerk
           zip --junk-paths gitwerk-macos-amd64 gitwerk
       - name: Upload artifact
         uses: actions/upload-artifact@v1
