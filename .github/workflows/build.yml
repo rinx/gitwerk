@@ -70,7 +70,9 @@ jobs:
           ./lein uberjar
       - name: Build native image
         run: |
-          make gitwerk-static
+          curl -L -o musl.tar.gz https://github.com/gradinac/musl-bundle-example/releases/download/v1.0/musl.tar.gz
+          tar xvzf musl.tar.gz
+          make OPTS="--static -H:UseMuslC=bundle" gitwerk
           # upx --lzma --best gitwerk
           zip --junk-paths gitwerk-linux-static-amd64 gitwerk
       - name: Upload artifact
